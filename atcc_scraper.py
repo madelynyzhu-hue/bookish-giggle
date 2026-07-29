@@ -19,7 +19,6 @@ from bs4 import BeautifulSoup
 
 INPUT_CSV = "100 Bug Project(FB).csv"
 OUTPUT_CSV = "100_Bug_Project_Populated.csv"
-DATA_DIR_CSV = "data/100_Bug_Project_Populated.csv"
 BASE_URL = "https://www.atcc.org/products/"
 DEFAULT_CACHE_DIR = "cache"
 
@@ -301,13 +300,12 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
 
         populated_rows.append(new_row)
 
-    # Save to NEW output CSV files without modifying INPUT_CSV
-    for path in [output_file, DATA_DIR_CSV]:
-        with open(path, "w", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=headers)
-            writer.writeheader()
-            writer.writerows(populated_rows)
-        print(f"[SUCCESS] Created NEW populated CSV spreadsheet -> {path}")
+    # Save to NEW output CSV file without modifying INPUT_CSV
+    with open(output_file, "w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=headers)
+        writer.writeheader()
+        writer.writerows(populated_rows)
+    print(f"[SUCCESS] Created NEW populated CSV spreadsheet -> {output_file}")
 
     return True
 
