@@ -5,7 +5,7 @@ Scrapes product information for ATCC bacteria strains and populates 100_Bug_Proj
 
 Features:
 - Reads input CSV ('100 Bug Project(FB).csv') using organism name & ATCC number resolution (same as atcc_scraper.py).
-- Resolves 'NBF' and organism species names/typos to primary reference ATCC catalog numbers.
+- Formats shared columns (Strain name, Medium, Temp, Atmosphere, BSL, SDS API, ATCC Link) identically to 100_Bug_Project_Populated.csv.
 - Extracts 37 comprehensive columns per bacteria strain from ATCC web pages.
 - Caches scraped HTML pages in 'cache/' directory to optimize performance.
 - Strictly defaults missing ATCC values to "Unknown" (NEVER defaulting to 37°C, Aerobic, or BSL-1).
@@ -170,6 +170,23 @@ def resolve_organism_atcc_number(organism_name, specified_atcc=None):
 
     return None
 
+def clean_species_name(h1_title, raw_input_name):
+    """Cleans organism species name to standard binomial format (e.g. Enterococcus avium)."""
+    if raw_input_name and raw_input_name.strip():
+        name = raw_input_name.strip()
+        if name.lower() not in ['nbf', 'unknown', 'none', ''] and not name.upper().startswith('ATCC'):
+            return name
+
+    if not h1_title or h1_title == 'Unknown':
+        return 'Unknown'
+
+    # Extract clean genus species from ATCC H1 title
+    name = h1_title.split('(')[0].strip()
+    name = re.sub(r'([a-z])([A-Z])', r'\1 \2', name) # Separate camelCase concatenation
+    name = re.sub(r'\s*subsp\..*', '', name, flags=re.I)
+    name = re.sub(r'\s+(Collins|Castellani|Goodfellow|Abe|Rosenbach|Migula|Kawamura|Bouvet|et al\.).*', '', name, flags=re.I)
+    return name.strip()
+
 def fetch_atcc_page(atcc_number):
     """Fetches HTML from ATCC website with local disk caching and macOS SSL context."""
     if not atcc_number:
@@ -200,7 +217,7 @@ def fetch_atcc_page(atcc_number):
         print(f"  Warning: Failed to fetch ATCC {atcc_number}: {e}")
         return atcc_number, None
 
-def parse_atcc_html(html, atcc_number):
+def parse_atcc_html(html, atcc_number, raw_input_name=""):
     """
     Parses ATCC product HTML and returns extracted details.
     Missing fields strictly default to 'Unknown' (never defaulting to 37°C, Aerobic, or BSL-1).
@@ -208,14 +225,15 @@ def parse_atcc_html(html, atcc_number):
     data = {col: "Unknown" for col in COLUMNS}
     
     if not html:
+        data["Strain (Genus, species)"] = clean_species_name("", raw_input_name)
         return data
 
     soup = BeautifulSoup(html, 'html.parser')
     
     # 1. Page Title / Organism Name
     h1 = soup.find('h1')
-    if h1:
-        data["Strain (Genus, species)"] = h1.get_text(strip=True)
+    h1_title = h1.get_text(strip=True) if h1 else "Unknown"
+    data["Strain (Genus, species)"] = clean_species_name(h1_title, raw_input_name)
     
     # 2. Extract Key-Value Pairs from Description Lists (<dl>)
     dl_pairs = {}
@@ -232,7 +250,7 @@ def parse_atcc_html(html, atcc_number):
         return dl_pairs.get(key_name.lower(), "Unknown")
 
     # Map DL fields to Columns
-    data["ATCC Number"] = atcc_number if atcc_number else "Unknown"
+    data["ATCC Number"] = f"ATCC {atcc_number}" if atcc_number else "Unknown"
     data["Strain Designation"] = get_val("Strain designation")
     data["Product Type"] = get_val("Product type")
     data["Type Strain Flag"] = get_val("Type strain")
@@ -372,7 +390,7 @@ def process_csv(input_path=INPUT_CSV, output_path=OUTPUT_CSV):
         
         if target_atcc_num and target_atcc_num in cache:
             html = cache[target_atcc_num]
-            atcc_data = parse_atcc_html(html, target_atcc_num)
+            atcc_data = parse_atcc_html(html, target_atcc_num, org_name)
         else:
             atcc_data = {col: "Unknown" for col in COLUMNS}
             atcc_data["ATCC Number"] = "Unknown"
@@ -382,8 +400,7 @@ def process_csv(input_path=INPUT_CSV, output_path=OUTPUT_CSV):
         row_dict.update(atcc_data)
         
         row_dict["Organism Source"] = specified_atcc if specified_atcc else (f"ATCC {target_atcc_num}" if target_atcc_num else "Unknown")
-        if org_name and (row_dict["Strain (Genus, species)"] == "Unknown" or not target_atcc_num):
-            row_dict["Strain (Genus, species)"] = org_name
+        row_dict["Strain (Genus, species)"] = clean_species_name(row_dict.get("Strain (Genus, species)"), org_name)
             
         row_dict["NBF Folder"] = nbf_folder if nbf_folder else "Unknown"
         row_dict["NBF File Name"] = nbf_filename if nbf_filename else "Unknown"
