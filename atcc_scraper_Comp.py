@@ -6,6 +6,7 @@ Scrapes product information for ATCC bacteria strains and populates 100_Bug_Proj
 Features:
 - Reads input CSV ('100 Bug Project(FB).csv') using organism name & ATCC number resolution (same as atcc_scraper.py).
 - Formats shared columns (Strain name, Medium, Temp, Atmosphere, BSL, SDS API, ATCC Link) identically to 100_Bug_Project_Populated.csv.
+- Converts long GenBank accession text into clean NCBI Direct Accession Links.
 - Extracts 37 comprehensive columns per bacteria strain from ATCC web pages.
 - Caches scraped HTML pages in 'cache/' directory to optimize performance.
 - Strictly defaults missing ATCC values to "Unknown" (NEVER defaulting to 37°C, Aerobic, or BSL-1).
@@ -187,6 +188,23 @@ def clean_species_name(h1_title, raw_input_name):
     name = re.sub(r'\s+(Collins|Castellani|Goodfellow|Abe|Rosenbach|Migula|Kawamura|Bouvet|et al\.).*', '', name, flags=re.I)
     return name.strip()
 
+def format_genbank_accession_links(cross_refs_text):
+    """Converts raw GenBank cross-reference string into clean NCBI direct accession URLs."""
+    if not cross_refs_text or cross_refs_text == "Unknown":
+        return "Unknown"
+    
+    # Extract GenBank accession IDs (e.g. GenBankY09578 -> Y09578, GenBankBA000036 -> BA000036)
+    accessions = re.findall(r'GenBank([A-Z]{1,3}\d{5,6})', cross_refs_text)
+    if not accessions:
+        return cross_refs_text
+
+    # Deduplicate while preserving order
+    unique_accs = list(dict.fromkeys(accessions))
+    
+    # Format as space-separated NCBI Direct URLs
+    ncbi_urls = [f"https://www.ncbi.nlm.nih.gov/nuccore/{acc}" for acc in unique_accs]
+    return " ; ".join(ncbi_urls)
+
 def fetch_atcc_page(atcc_number):
     """Fetches HTML from ATCC website with local disk caching and macOS SSL context."""
     if not atcc_number:
@@ -274,6 +292,9 @@ def parse_atcc_html(html, atcc_number, raw_input_name=""):
     data["Cross References"] = get_val("Cross references")
     data["Patent Number"] = get_val("Patent number")
     
+    # Convert GenBank text block into direct NCBI links
+    data["GenBank Accession"] = format_genbank_accession_links(get_val("Cross references"))
+    
     # 3. Biosafety Level (BSL) - Strictly "Unknown" if not specified on page
     bsl_elem = soup.find(string=re.compile(r'BSL\s*\d', re.I))
     if bsl_elem:
@@ -292,13 +313,6 @@ def parse_atcc_html(html, atcc_number, raw_input_name=""):
     else:
         data["ATCC Product Link"] = "Unknown"
         data["Safety Data Sheet (SDS API)"] = "Unknown"
-        
-    # 5. Extract GenBank / Accession if present
-    cross_refs = get_val("Cross references")
-    if "GenBank" in cross_refs:
-        data["GenBank Accession"] = cross_refs
-    else:
-        data["GenBank Accession"] = "Unknown"
         
     # 6. Permits & Restrictions
     permits = get_val("Permits & restrictions")
