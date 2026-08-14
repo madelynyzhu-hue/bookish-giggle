@@ -1,125 +1,149 @@
-Name,ATCC Number
-Enterococcus avium,ATCC 14025
-Enterococcus avium,ATCC 14025
-Alcaligenes faecalis,ATCC 8750
-Alcaligenes faecalis,ATCC 8750
-Rhodococcus equi,ATCC 6939
-Rhodococcus equi,ATCC 6939
-Corynebacterium glutamicum,ATCC 13032
-Corynebacterium glutamicum,ATCC 13032
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Kleisiella pneuminoa,NBF
-Kleisiella pneuminoa,NBF
-Enteroccus faecium,NBF
-Enteroccus faecium,NBF
-Enterobacter Spp,NBF
-Enterobacter Spp,NBF
-Kingella kingae,ATCC 23330
-Kingella kingae,ATCC 23330
-Proteus vulgaris,ATCC 6380
-Proteus vulgaris,ATCC 6380
-Morganella morganii subsp. morganii,ATCC 25830
-Morganella morganii subsp. morganii,ATCC 25830
-Moraxella catarrhalis,ATCC 25238
-Moraxella catarrhalis,ATCC 25238
-Chromobacterium violaceum,ATCC 12472
-Chromobacterium violaceum,ATCC 12472
-Staphylococcus saprophylicus,ATCC 49453
-Staphylococcus saprophylicus,ATCC 49453
-Staphylococcus simulans,ATCC 27848
-Staphylococcus simulans,ATCC 27848
-Staphylococcus auricularis,ATCC 33753
-Staphylococcus auricularis,ATCC 33753
-Staphylococcus schleiferi,ATCC 49545
-Staphylococcus schleiferi,ATCC 49545
-Staphylococcus epidermidis,ATCC 12228
-Staphylococcus epidermidis,ATCC 12228
-Pseudomonas aeruginosa,ATCC 27853
-Pseudomonas aeruginosa,ATCC 27853
-Streptococcus salivarius subsp. salivaris,ATCC 13419
-Streptococcus salivarius subsp. salivaris,ATCC 13419
-Staphylococcus haemolyticus,ATCC 29970
-Staphylococcus haemolyticus,ATCC 29970
-Staphylococcus aureus sub sp. aureus,ATCC 29213
-Staphylococcus aureus sub sp. aureus,ATCC 29213
-Staphylococcus lugdunensis,ATCC 49576
-Staphylococcus lugdunensis,ATCC 49576
-Acinetobatcor baumiini,NBF
-Acinetobatcor baumiini,NBF
-Pseudomonas aeruginosa,NBF
-Pseudomonas aeruginosa,NBF
-Gram Negative cocci,NBF
-Gram Negative cocci,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus capitis,NBF
-Staphylococcus capitis,NBF
-Pseudomonas aeruginosa,NBF
-Pseudomonas aeruginosa,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Escherichia coli,NBF
-Escherichia coli,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Unknown,NBF
-Unknown,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Streptococcus mitis/oralis,NBF
-Streptococcus mitis/oralis,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus epidermidis,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Streptococcus gordonii,NBF
-Streptococcus gordonii,NBF
-#2,NBF
-#2,NBF
-Staphylococcus aureus,NBF
-Staphylococcus aureus,NBF
-Presum. Acid Fast Bacilli,NBF
-Presum. Acid Fast Bacilli,NBF
-Streptococcus mutans,NBF
-Streptococcus mutans,NBF
-Staphylococcus aureus 10/2,NBF
-Staphylococcus aureus 10/2,NBF
-Escherichia coli,NBF
-Escherichia coli,NBF
-Serratia marcescens , subsp marcescens,ATCC 13880
-Serratia marcescens , subsp marcescens,ATCC 13880
-Klebsiella oxytoca,ATCC 700324
-Klebsiella oxytoca,ATCC 700324
-Enterococcus faecalis,ATCC 19433
-Enterococcus faecalis,ATCC 19433
-Klebsiella planticola,ATCC 700831
-Klebsiella planticola,ATCC 700831
-Streptococcus pyogenes,ATCC 19615
-Streptococcus pyogenes,ATCC 19615
-Enteroccus faecium,ATCC 19434
-Enteroccus faecium,ATCC 19434
-Klebsiella pneumoniae, subsp. pneumoniae,ATCC 13883
-Klebsiella pneumoniae, subsp. pneumoniae,ATCC 13883
-Streptococcus agalactiae,ATCC 13813
-Streptococcus agalactiae,ATCC 13813
-Proteus mirabilis,ATCC 29906
-Proteus mirabilis,ATCC 29906
-Achromobacter xylosoxidans,ATCC 27061
-Achromobacter xylosoxidans,ATCC 27061
-Erysipelothrix rhusiopathiae,ATCC 19414
-Erysipelothrix rhusiopathiae,ATCC 19414
-Streptococcus bovis,ATCC 33317
-Streptococcus bovis,ATCC 33317
-Corynebacterium jeikeium,ATCC 43734
-Corynebacterium jeikeium,ATCC 43734
-Elizabethkingia meningoseptica,ATCC 13253
-Elizabethkingia meningoseptica,ATCC 13253
+Organism Source,"Strain (Genus, species)"
+ATCC 14025,Enterococcus avium
+ATCC 14025,Enterococcus avium
+ATCC 8750,Alcaligenes faecalis
+ATCC 8750,Alcaligenes faecalis
+ATCC 6939,Rhodococcus equi
+ATCC 6939,Rhodococcus equi
+ATCC 13032,Corynebacterium glutamicum
+ATCC 13032,Corynebacterium glutamicum
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Kleisiella pneuminoa
+NBF,Kleisiella pneuminoa
+NBF,Enteroccus faecium
+NBF,Enteroccus faecium
+NBF,Enterobacter Spp
+NBF,Enterobacter Spp
+ATCC 23330,Kingella kingae
+ATCC 23330,Kingella kingae
+ATCC 6380,Proteus vulgaris
+ATCC 6380,Proteus vulgaris
+ATCC 25830,Morganella morganii subsp. morganii
+ATCC 25830,Morganella morganii subsp. morganii
+ATCC 25238,Moraxella catarrhalis
+ATCC25238,Moraxella catarrhalis
+ATCC 12472,Chromobacterium violaceum
+ATCC 12472,Chromobacterium violaceum
+ATCC 49453,Staphylococcus saprophylicus
+ATCC 49453,Staphylococcus saprophylicus
+ATCC 27848,Staphylococcus simulans
+ATCC 27848,Staphylococcus simulans
+ATCC 33753,Staphylococcus auricularis
+ATCC 33753,Staphylococcus auricularis
+ATCC 49545,Staphylococcus schleiferi
+ATCC 49545,Staphylococcus schleiferi
+ATCC 12228,Staphylococcus epidermidis
+ATCC 12228,Staphylococcus epidermidis
+ATCC 27853,Pseudomonas aeruginosa
+ATCC 27853,Pseudomonas aeruginosa
+ATCC 13419,Streptococcus salivarius subsp. salivaris
+ATCC 13419,Streptococcus salivarius subsp. salivaris
+ATCC 29970,Staphylococcus haemolyticus
+ATCC 29970,Staphylococcus haemolyticus
+ATCC 29213,Staphylococcus aureus sub sp. aureus
+ATCC 29213,Staphylococcus aureus sub sp. aureus
+ATCC 49576,Staphylococcus lugdunensis
+ATCC 49576,Staphylococcus lugdunensis
+NBF,Acinetobatcor baumiini
+NBF,Acinetobatcor baumiini
+NBF,Pseudomonas aeruginosa
+NBF,Pseudomonas aeruginosa
+NBF,Gram Negative cocci
+NBF,Gram Negative cocci
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus capitis
+NBF,Staphylococcus capitis
+NBF,Pseudomonas aeruginosa
+NBF,Pseudomonas aeruginosa
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Escherichia coli
+NBF,Escherichia coli
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Unknown
+NBF,Unknown
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Streptococcus mitis/oralis
+NBF,Streptococcus mitis/oralis
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus epidermidis
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Streptococcus gordonii
+NBF,Streptococcus gordonii
+NBF,#2
+NBF,#2
+NBF,Staphylococcus aureus
+NBF,Staphylococcus aureus
+NBF,Presum. Acid Fast Bacilli
+NBF,Presum. Acid Fast Bacilli
+NBF,Streptococcus mutans
+NBF,Streptococcus mutans
+NBF,Staphylococcus aureus 10/2
+NBF,Staphylococcus aureus 10/2
+NBF,Escherichia coli
+NBF,Escherichia coli
+ATCC 13880,"Serratia marcescens , subsp marcescens"
+ATCC 13880,"Serratia marcescens , subsp marcescens"
+ATCC 700324,Klebsiella oxytoca
+ATCC 700324,Klebsiella oxytoca
+ATCC 19433,Enterococcus faecalis
+ATCC 19433,Enterococcus faecalis
+ATCC 700831,Klebsiella planticola
+ATCC 700831,Klebsiella planticola
+ATCC 19615,Streptococcus pyogenes
+ATCC 19615,Streptococcus pyogenes
+ATCC 19434,Enteroccus faecium
+ATCC 19434,Enteroccus faecium
+ATCC 13883,"Klebsiella pneumoniae, subsp. pneumoniae"
+ATCC 13883,"Klebsiella pneumoniae, subsp. pneumoniae"
+ATCC 13813,Streptococcus agalactiae
+ATCC 13813,Streptococcus agalactiae
+ATCC 29906,Proteus mirabilis
+ATCC 29906,Proteus mirabilis
+ATCC 27061,Achromobacter xylosoxidans
+ATCC 27061,Achromobacter xylosoxidans
+ATCC 19414,Erysipelothrix rhusiopathiae
+ATCC 19414,Erysipelothrix rhusiopathiae
+ATCC 33317,Streptococcus bovis
+ATCC 33317,Streptococcus bovis
+ATCC 43734,Corynebacterium jeikeium
+ATCC 43734,Corynebacterium jeikeium
+ATCC 13253,Elizabethkingia meningoseptica
+ATCC 13253,Elizabethkingia meningoseptica
+ATCC 15309,Acinetobacter iwoffii
+ATCC 15309,Acinetobacter iwoffii
+ATCC 49176,Abiotrophia defectiva
+ATCC 49176,Abiotrophia defectiva
+ATCC 27061,Achromobacter xylosoxidans
+ATCC 27061,Achromobacter xylosoxidans
+ATCC 27037,Actinomyces gerencseriae
+ATCC 27037,Actinomyces gerencseriae
+ATCC 19004,Acinetobacter pittii
+ATCC 19004,Acinetobacter pittii
+Blank FB,Blank FB
+Pa 10^4,Pa 10^4
+ATCC BAA- 617,Acinetobacter ursingii
+ATCC BAA- 617,Acinetobacter ursingii
+ATCC 700050,Actinomyces neuii
+ATCC 700050,Actinomyces neuii
+ATCC 23055,Acinetobacter calcoaceticus
+ATCC 23055,Acinetobacter calcoaceticus
+ATCC 19606,Acinetobacter baumannii
+ATCC 19606,Acinetobacter baumannii
+ATCC 12102,Actinomyces israelii
+ATCC 12102,Actinomyces israelii
+Blank FB,Blank FB
+Pa 10^4,Pa 10^4

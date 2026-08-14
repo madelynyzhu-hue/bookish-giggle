@@ -99,6 +99,8 @@ ORGANISM_PRIMARY_REF_MAP = {
     "staphylococcus schleiferi": "49545",
     "staphylococcus epidermidis": "12228",
     "pseudomonas aeruginosa": "27853",
+    "pa 10^4": "27853",
+    "pa 104": "27853",
     "streptococcus salivarius": "13419",
     "streptococcus salivarius subsp. salivaris": "13419",
     "staphylococcus haemolyticus": "29970",
@@ -127,7 +129,15 @@ ORGANISM_PRIMARY_REF_MAP = {
     "streptococcus bovis": "33317",
     "corynebacterium jeikeium": "43734",
     "elizabethkingia meningoseptica": "13253",
-    "abiotrophia defectiva": "49176"
+    "abiotrophia defectiva": "49176",
+    "acinetobacter iwoffii": "15309",
+    "acinetobacter lwoffii": "15309",
+    "actinomyces gerencseriae": "27037",
+    "acinetobacter pittii": "19004",
+    "acinetobacter ursingii": "BAA-617",
+    "actinomyces neuii": "700050",
+    "acinetobacter calcoaceticus": "23055",
+    "actinomyces israelii": "12102"
 }
 
 def ensure_directories():
@@ -141,9 +151,12 @@ def get_ssl_context():
     return ctx
 
 def extract_numeric_id(atcc_str):
-    """Parses raw numeric ID from strings like 'ATCC 14025' or '14025'. Returns None for 'NBF'."""
-    if not atcc_str or str(atcc_str).strip().upper() in ["NBF", "N/A", "NONE", ""]:
+    """Parses raw numeric ID from strings like 'ATCC 14025' or 'ATCC BAA-617'. Returns None for 'NBF'."""
+    if not atcc_str or str(atcc_str).strip().upper() in ["NBF", "N/A", "NONE", "", "BLANK FB", "PA 10^4"]:
         return None
+    match = re.search(r'BAA[-\s]*\d+', str(atcc_str), re.I)
+    if match:
+        return re.sub(r'\s+', '', match.group(0).upper())
     match = re.search(r'\d+', str(atcc_str))
     return match.group(0) if match else None
 
@@ -157,7 +170,7 @@ def resolve_organism_atcc_number(organism_name, specified_atcc=None):
         return None
 
     clean_name = str(organism_name).strip().lower()
-    if clean_name in ["unknown", "#2", "", "nbf"]:
+    if clean_name in ["unknown", "#2", "", "nbf", "blank fb"]:
         return None
 
     # 1. Exact match in map
@@ -175,7 +188,7 @@ def clean_species_name(h1_title, raw_input_name):
     """Cleans organism species name to standard binomial format (e.g. Enterococcus avium)."""
     if raw_input_name and raw_input_name.strip():
         name = raw_input_name.strip()
-        if name.lower() not in ['nbf', 'unknown', 'none', ''] and not name.upper().startswith('ATCC'):
+        if name.lower() not in ['nbf', 'unknown', 'none', 'blank fb', ''] and not name.upper().startswith('ATCC'):
             return name
 
     if not h1_title or h1_title == 'Unknown':
@@ -185,23 +198,19 @@ def clean_species_name(h1_title, raw_input_name):
     name = h1_title.split('(')[0].strip()
     name = re.sub(r'([a-z])([A-Z])', r'\1 \2', name) # Separate camelCase concatenation
     name = re.sub(r'\s*subsp\..*', '', name, flags=re.I)
-    name = re.sub(r'\s+(Collins|Castellani|Goodfellow|Abe|Rosenbach|Migula|Kawamura|Bouvet|et al\.).*', '', name, flags=re.I)
+    name = re.sub(r'\s+(Collins|Castellani|Goodfellow|Abe|Rosenbach|Migula|Kawamura|Bouvet|Nemec|et al\.).*', '', name, flags=re.I)
     return name.strip()
 
 def format_genbank_accession_links(cross_refs_text):
-    """Converts raw GenBank cross-reference string into clean NCBI direct accession URLs."""
+    """Converts raw GenBank cross-reference string into clean NCBI Direct Accession URLs."""
     if not cross_refs_text or cross_refs_text == "Unknown":
         return "Unknown"
     
-    # Extract GenBank accession IDs (e.g. GenBankY09578 -> Y09578, GenBankBA000036 -> BA000036)
     accessions = re.findall(r'GenBank([A-Z]{1,3}\d{5,6})', cross_refs_text)
     if not accessions:
         return cross_refs_text
 
-    # Deduplicate while preserving order
     unique_accs = list(dict.fromkeys(accessions))
-    
-    # Format as space-separated NCBI Direct URLs
     ncbi_urls = [f"https://www.ncbi.nlm.nih.gov/nuccore/{acc}" for acc in unique_accs]
     return " ; ".join(ncbi_urls)
 
@@ -351,8 +360,8 @@ def process_csv(input_path=INPUT_CSV, output_path=OUTPUT_CSV):
     print(f"Processing {len(raw_rows)} data rows from '{input_path}'...")
     
     # Identify key columns flexibly
-    name_col = next((f for f in fieldnames if "name" in f.lower() or "strain" in f.lower() or "genus" in f.lower()), fieldnames[0])
-    atcc_col = next((f for f in fieldnames if "atcc" in f.lower() or "source" in f.lower() or "number" in f.lower()), None)
+    name_col = next((f for f in fieldnames if "strain" in f.lower() or "genus" in f.lower() or "name" in f.lower()), fieldnames[0])
+    atcc_col = next((f for f in fieldnames if "source" in f.lower() or "atcc" in f.lower() or "number" in f.lower()), None)
     nbf_folder_col = next((f for f in fieldnames if "folder" in f.lower()), None)
     nbf_file_col = next((f for f in fieldnames if "file" in f.lower()), None)
     start_col = next((f for f in fieldnames if "start" in f.lower()), None)
@@ -363,10 +372,10 @@ def process_csv(input_path=INPUT_CSV, output_path=OUTPUT_CSV):
     row_target_nums = []
     unique_atccs = set()
     for row in raw_rows:
-        org_name = row.get(name_col, "").strip()
-        specified_atcc = row.get(atcc_col, "").strip() if atcc_col else ""
+        org_source = row.get(atcc_col, "").strip() if atcc_col else ""
+        strain_name = row.get(name_col, "").strip() if name_col else ""
         
-        target_num = resolve_organism_atcc_number(org_name, specified_atcc)
+        target_num = resolve_organism_atcc_number(strain_name, org_source)
         row_target_nums.append(target_num)
         if target_num:
             unique_atccs.add(target_num)
@@ -385,8 +394,8 @@ def process_csv(input_path=INPUT_CSV, output_path=OUTPUT_CSV):
     populated_rows = []
     
     for idx, row in enumerate(raw_rows):
-        org_name = row.get(name_col, "").strip()
-        specified_atcc = row.get(atcc_col, "").strip() if atcc_col else "Unknown"
+        org_source = row.get(atcc_col, "").strip() if atcc_col else "Unknown"
+        strain_name = row.get(name_col, "").strip() if name_col else "Unknown"
         nbf_folder = row.get(nbf_folder_col, "").strip() if nbf_folder_col else "Unknown"
         nbf_filename = row.get(nbf_file_col, "").strip() if nbf_file_col else "Unknown"
         start_time = row.get(start_col, "").strip() if start_col else "Unknown"
@@ -404,7 +413,7 @@ def process_csv(input_path=INPUT_CSV, output_path=OUTPUT_CSV):
         
         if target_atcc_num and target_atcc_num in cache:
             html = cache[target_atcc_num]
-            atcc_data = parse_atcc_html(html, target_atcc_num, org_name)
+            atcc_data = parse_atcc_html(html, target_atcc_num, strain_name)
         else:
             atcc_data = {col: "Unknown" for col in COLUMNS}
             atcc_data["ATCC Number"] = "Unknown"
@@ -413,8 +422,8 @@ def process_csv(input_path=INPUT_CSV, output_path=OUTPUT_CSV):
         row_dict = {col: "Unknown" for col in COLUMNS}
         row_dict.update(atcc_data)
         
-        row_dict["Organism Source"] = specified_atcc if specified_atcc else (f"ATCC {target_atcc_num}" if target_atcc_num else "Unknown")
-        row_dict["Strain (Genus, species)"] = clean_species_name(row_dict.get("Strain (Genus, species)"), org_name)
+        row_dict["Organism Source"] = org_source if org_source else (f"ATCC {target_atcc_num}" if target_atcc_num else "Unknown")
+        row_dict["Strain (Genus, species)"] = clean_species_name(row_dict.get("Strain (Genus, species)"), strain_name)
             
         row_dict["NBF Folder"] = nbf_folder if nbf_folder else "Unknown"
         row_dict["NBF File Name"] = nbf_filename if nbf_filename else "Unknown"
