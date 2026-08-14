@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 ATCC Primary Name-Lookup Scraper with ATCC Number Verification & NBF Fallback
-1. Reads the input CSV file "100 Bug Project(FB).csv".
+1. Reads the input CSV file "200 Bug Project(FB).csv".
 2. Looks up organism names and ATCC numbers (resolving 'NBF' entries to reference strains).
 3. Fetches and parses biological metadata from ATCC.org.
-4. Generates a NEW populated CSV file ("100_Bug_Project_Populated.csv") WITHOUT modifying the input CSV file!
+4. Generates a NEW populated CSV file ("200_Bug_Project_Populated.csv") WITHOUT modifying the input CSV file!
 """
 
 import urllib.request
@@ -17,8 +17,8 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from bs4 import BeautifulSoup
 
-INPUT_CSV = "100 Bug Project(FB).csv"
-OUTPUT_CSV = "100_Bug_Project_Populated.csv"
+INPUT_CSV = "200 Bug Project(FB).csv"
+OUTPUT_CSV = "200_Bug_Project_Populated.csv"
 BASE_URL = "https://www.atcc.org/products/"
 DEFAULT_CACHE_DIR = "cache"
 

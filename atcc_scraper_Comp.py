@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 ATCC Product Information Scraper (Comprehensive Version)
-Scrapes product information for ATCC bacteria strains and populates 100_Bug_Project_Populated_Comp.csv
+Scrapes product information for ATCC bacteria strains and populates 200_Bug_Project_Populated_Comp.csv
 
 Features:
-- Reads input CSV ('100 Bug Project(FB).csv') using organism name & ATCC number resolution (same as atcc_scraper.py).
-- Formats shared columns (Strain name, Medium, Temp, Atmosphere, BSL, SDS API, ATCC Link) identically to 100_Bug_Project_Populated.csv.
+- Reads input CSV ('200 Bug Project(FB).csv') using organism name & ATCC number resolution (same as atcc_scraper.py).
+- Formats shared columns (Strain name, Medium, Temp, Atmosphere, BSL, SDS API, ATCC Link) identically to 200_Bug_Project_Populated.csv.
 - Converts long GenBank accession text into clean NCBI Direct Accession Links.
 - Extracts 37 comprehensive columns per bacteria strain from ATCC web pages.
 - Caches scraped HTML pages in 'cache/' directory to optimize performance.
@@ -24,8 +24,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from bs4 import BeautifulSoup
 
 # Input & Output File Paths
-INPUT_CSV = "100 Bug Project(FB).csv"
-OUTPUT_CSV = "100_Bug_Project_Populated_Comp.csv"
+INPUT_CSV = "200 Bug Project(FB).csv"
+OUTPUT_CSV = "200_Bug_Project_Populated_Comp.csv"
 CACHE_DIR = "cache"
 BASE_URL = "https://www.atcc.org/products/"
 
