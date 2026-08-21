@@ -29,12 +29,11 @@
   * Product Format           : Freeze-dried
 
 --------------------------------------------------------------------------------
- 3. SAFETY DATASHEET (SDS) & BIOSAFETY INFORMATION
+ 3. PRODUCT SHEET & BIOSAFETY INFORMATION
 --------------------------------------------------------------------------------
   * Biosafety Level               : BSL 2
-  * Safety Data Sheet (SDS) Title : Safety Data Sheet Download
-  * SDS Portal / Landing Page     : https://www.atcc.org/resources/safety-data-sheets
-  * SDS Direct Form Request API   : https://www.atcc.org/api/product/sds?atcc_number=49176
+  * Product Sheet PDF Title       : Official ATCC Product Sheet
+  * Product Sheet PDF API Link    : https://www.atcc.org/api/pdf/product-sheet?id=49176
   * Intended Use                  : This product is intended for laboratory research use only. It is not intended for any animal or human therapeutic use, any human or animal consumption, or any diagnostic use.
   * Disclaimers & Safety          : This product is intended for laboratory research use only. It is not intended for any animal or human therapeutic use, any human or animal consumption, or any diagnostic use. Any proposed commercial use is prohibited without alicense from ATCC.While ATCC uses reasonable efforts to include accurate and up-to-date information on this product sheet, ATCC makes no warranties or representations as to its accuracy. Citations from scientific literature and patents are provided for informational purposes only. ATCC does not warrant that such information has been confirmed to be accurate or complete and the customer bears the sole responsibility of confirming the accuracy and completeness of any such information.This product is sent on the condition that the customer is responsible for and assumes all risk and responsibility in connection with the receipt, handling, storage, disposal, and use of the ATCC product including without limitation taking all appropriate safety and handling precautions to minimize health or environmental risk. As a condition of receiving the material, the customer agrees that any activity undertaken with the ATCC product and any progeny or modifications will be conducted in compliance with all applicable laws, regulations, and guidelines. This product is provided 'AS IS' with no representations or warranties whatsoever except as expressly set forth herein and in no event shall ATCC, its parents, subsidiaries, directors, officers, agents, employees, assigns, successors, and affiliates be liable for indirect, special, incidental, or consequential damages of any kind in connection with or arising out of the customer's use of the product. While reasonable effort is made to ensure authenticity and reliability of materials on deposit, ATCC is not liable for damages arising from the misidentification or misrepresentation of such materials.Please see the material transfer agreement (MTA) for further details regarding the use of this product. The MTA is available at www.atcc.org.
 

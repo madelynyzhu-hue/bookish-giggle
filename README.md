@@ -1,6 +1,6 @@
 # 🧬 ATCC Biological Data Scraper & Spreadsheet Generator (`bookish-giggle`)
 
-An automated Python data extraction tool designed to parse product specifications, culture handling protocols, isolation source details, growth requirements, biosafety levels, and Safety Data Sheet (SDS) API links for biological cultures from the [ATCC (American Type Culture Collection)](https://www.atcc.org/) repository.
+An automated Python data extraction tool designed to parse product specifications, culture handling protocols, isolation source details, growth requirements, biosafety levels, and official Product Sheet PDF links for biological cultures from the [ATCC (American Type Culture Collection)](https://www.atcc.org/) repository.
 
 ---
 
@@ -30,7 +30,7 @@ This project provides a robust, parallel Python web scraper using `urllib` and `
 5. **Incubation Temperature**: Optimal growth temperature (°C).
 6. **Atmosphere**: Gaseous requirement (Aerobic, Anaerobic, 5% CO2).
 7. **Biosafety Level**: Biological containment rating (BSL-1, BSL-2).
-8. **Safety Data Sheet (SDS API)**: Direct REST API link for Safety Data Sheets.
+8. **Product Sheet**: Direct API link for official ATCC Product Sheet PDF documents.
 9. **ATCC Product Link**: Direct URL to the live ATCC catalog page.
 
 ---

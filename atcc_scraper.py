@@ -5,6 +5,7 @@ ATCC Primary Name-Lookup Scraper with ATCC Number Verification & NBF Fallback
 2. Looks up organism names and ATCC numbers (resolving 'NBF' entries to reference strains).
 3. Fetches and parses biological metadata from ATCC.org.
 4. Generates a NEW populated CSV file ("100_Bug_Project_Populated.csv") WITHOUT modifying the input CSV file!
+5. Provides official ATCC Product Sheet PDF links for each strain.
 """
 
 import urllib.request
@@ -164,15 +165,16 @@ def parse_atcc_info(html, atcc_number):
         bsl_level = "BSL 2"
 
     organism_clean = title.split('(')[0].strip() if '(' in title else title
+    product_sheet_url = f"https://www.atcc.org/api/pdf/product-sheet?id={atcc_number}"
 
     return {
         "organism_name": organism_clean,
-        "isolation_source": get_detail("Isolation source"),
-        "culture_medium": get_detail("Medium"),
+        "isolation_source": get_detail("Isolation source", "N/A"),
+        "culture_medium": get_detail("Medium", "N/A"),
         "incubation_temperature": get_detail("Temperature", "37°C"),
         "atmosphere": get_detail("Atmosphere", "Aerobic"),
         "biosafety_level": bsl_level,
-        "sds_api_url": f"https://www.atcc.org/api/product/sds?atcc_number={atcc_number}",
+        "product_sheet_url": product_sheet_url,
         "product_url": f"{BASE_URL}{atcc_number}"
     }
 
@@ -196,7 +198,7 @@ def resolve_organism_atcc_number(organism_name, specified_atcc=None):
     return None
 
 def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
-    """Reads input CSV, resolves ATCC metadata, and writes to a NEW output CSV without modifying input CSV!"""
+    """Reads input CSV, resolves ATCC metadata, and writes to output CSV."""
     if not os.path.exists(input_file):
         print(f"[ERROR] Input CSV file '{input_file}' not found.", file=sys.stderr)
         return False
@@ -209,7 +211,6 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
         headers = [h.strip() for h in raw_headers if h and h.strip()]
         rows = list(reader)
 
-    # Clean rows to only include valid headers
     cleaned_rows = []
     for r in rows:
         clean_r = {k: v for k, v in r.items() if k and k.strip() in headers}
@@ -226,7 +227,7 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
         "Incubation Temperature",
         "Atmosphere",
         "Biosafety Level",
-        "Safety Data Sheet (SDS API)",
+        "Product Sheet",
         "ATCC Product Link"
     ]
 
@@ -239,7 +240,6 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
 
     print(f"[INFO] Reading '{input_file}' ({len(rows)} entries)...")
 
-    # Resolve target ATCC numbers for every row
     row_target_nums = []
     unique_atcc_nums = set()
 
@@ -252,9 +252,8 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
             unique_atcc_nums.add(target_num)
 
     unique_atccs = list(unique_atcc_nums)
-    print(f"[INFO] Fetching ATCC pages for {len(unique_atccs)} reference catalog strains in parallel...")
+    print(f"[INFO] Processing ATCC pages for {len(unique_atccs)} reference catalog strains...")
 
-    # Parallel HTTP fetch
     html_cache = {}
     if unique_atccs:
         with ThreadPoolExecutor(max_workers=5) as executor:
@@ -266,13 +265,11 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
                 except Exception as e:
                     print(f"[ERROR] Failed fetching ATCC {num}: {e}")
 
-    # Parse metadata
     parsed_records = {}
     for num, html in html_cache.items():
         if html:
             parsed_records[num] = parse_atcc_info(html, num)
 
-    # Build new output rows
     populated_rows = []
     for idx, row in enumerate(rows):
         new_row = dict(row)
@@ -285,7 +282,7 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
             new_row["Incubation Temperature"] = rec["incubation_temperature"]
             new_row["Atmosphere"] = rec["atmosphere"]
             new_row["Biosafety Level"] = rec["biosafety_level"]
-            new_row["Safety Data Sheet (SDS API)"] = rec["sds_api_url"]
+            new_row["Product Sheet"] = rec["product_sheet_url"]
             new_row["ATCC Product Link"] = rec["product_url"]
             if atcc_col and (not new_row[atcc_col] or new_row[atcc_col].strip().upper() == "NBF"):
                 new_row[atcc_col] = f"ATCC {target_num}"
@@ -295,22 +292,21 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
             new_row["Incubation Temperature"] = "N/A"
             new_row["Atmosphere"] = "N/A"
             new_row["Biosafety Level"] = "N/A"
-            new_row["Safety Data Sheet (SDS API)"] = "N/A"
+            new_row["Product Sheet"] = "N/A"
             new_row["ATCC Product Link"] = "N/A"
 
         populated_rows.append(new_row)
 
-    # Save to NEW output CSV file without modifying INPUT_CSV
     with open(output_file, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=headers)
         writer.writeheader()
         writer.writerows(populated_rows)
-    print(f"[SUCCESS] Created NEW populated CSV spreadsheet -> {output_file}")
+    print(f"[SUCCESS] Updated CSV spreadsheet -> {output_file}")
 
     return True
 
 def main():
-    parser = argparse.ArgumentParser(description="ATCC Scraper (Generates New Populated CSV)")
+    parser = argparse.ArgumentParser(description="ATCC Scraper (Generates Populated CSV)")
     parser.add_argument("--input", default=INPUT_CSV, help="Path to input CSV")
     parser.add_argument("--output", default=OUTPUT_CSV, help="Path to output CSV")
     args = parser.parse_args()
