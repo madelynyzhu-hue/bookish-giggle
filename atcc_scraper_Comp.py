@@ -48,7 +48,7 @@ COLUMNS = [
     "Product Format",
     "Storage Conditions",
     "Biosafety Level",
-    "Safety Data Sheet (SDS API)",
+    "Product Sheet",
     "ATCC Product Link",
     "Intended Use",
     "Permits & Restrictions",
@@ -318,10 +318,10 @@ def parse_atcc_html(html, atcc_number, raw_input_name=""):
     # 4. Links & APIs
     if atcc_number:
         data["ATCC Product Link"] = f"https://www.atcc.org/products/{atcc_number}"
-        data["Safety Data Sheet (SDS API)"] = f"https://www.atcc.org/api/product/sds?atcc_number={atcc_number}"
+        data["Product Sheet"] = f"https://www.atcc.org/api/pdf/product-sheet?id={atcc_number}"
     else:
         data["ATCC Product Link"] = "Unknown"
-        data["Safety Data Sheet (SDS API)"] = "Unknown"
+        data["Product Sheet"] = "Unknown"
         
     # 6. Permits & Restrictions
     permits = get_val("Permits & restrictions")
