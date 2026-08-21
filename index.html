@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>100-Strain Bacterial Catalog - Code Evolution & Project Presentation</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="bg-glow-1"></div>
+  <div class="bg-glow-2"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="top-bar">
+    <div class="brand-badge">
+      <div class="brand-icon">🧬</div>
+      <span>100-Strain Bacterial Catalog & Code Evolution Report</span>
+    </div>
+    <div class="nav-actions">
+      <button class="btn-icon" id="toggle-script-btn" title="Toggle Presenter Script (S)">
+        <span>🎙️</span> Presenter Script
+      </button>
+      <button class="btn-icon" id="fullscreen-btn" title="Toggle Fullscreen (F)">
+        <span>⛶</span> Fullscreen
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Slide Deck Viewport -->
+  <main class="deck-container">
+    
+    <!-- SLIDE 1: Title Slide -->
+    <section class="slide active" id="slide-1">
+      <div class="title-slide-content">
+        <div class="title-badge">
+          <span>🔬</span> Biosensor Model Training Initiative
+        </div>
+        <h1 class="main-title">100-Strain Bacterial Data Catalog</h1>
+        <p class="main-subtitle">
+          Project Report on Code Development Milestones, GitHub Refactoring, Entity Resolution, and Biosafety Compliance
+        </p>
+
+        <div class="meta-grid">
+          <div class="meta-card">
+            <div class="meta-label">Code Evolution</div>
+            <div class="meta-value">4 Major GitHub Iterations</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Project Scope</div>
+            <div class="meta-value">100 Target Strains Cataloged</div>
+          </div>
+          <div class="meta-card">
+            <div class="meta-label">Primary Deliverable</div>
+            <div class="meta-value">37-Column Populated Schema</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2: Code Development Workflow & GitHub Iterations -->
+    <section class="slide" id="slide-2">
+      <div class="slide-category">Slide 2 / 5 • Code Evolution & GitHub Updates</div>
+      <h2 class="slide-title">Code Development Milestones & GitHub History</h2>
+      <p class="slide-subtitle">
+        Key engineering iterations, codebase refactoring, and feature enhancements across the project repository lifecycle.
+      </p>
+
+      <div class="grid-2" style="margin-bottom: 1rem;">
+        <div class="card">
+          <div class="card-icon icon-cyan">🌿</div>
+          <h3 class="card-title">GitHub Development History</h3>
+          <ul class="feature-list" style="margin-top: 0.35rem;">
+            <li class="feature-item">
+              <span class="feature-bullet"></span>
+              <div><strong>v1.0 — Initial Scraper & Trial:</strong> Built <code>atcc_scraper.py</code> using <code>urllib</code> & <code>BS4</code>. Ran trial parsing on <code>atcc_49176_details.txt</code>.</div>
+            </li>
+            <li class="feature-item">
+              <span class="feature-bullet"></span>
+              <div><strong>v2.0 — 37-Column Script (<code>atcc_scraper_Comp.py</code>):</strong> Scaled extraction to 37 metadata attributes, added <code>ThreadPoolExecutor</code> & disk caching (<code>cache/</code>).</div>
+            </li>
+            <li class="feature-item">
+              <span class="feature-bullet"></span>
+              <div><strong>v2.5 — GenBank Link Transformation:</strong> Converted raw accession text into direct NCBI URLs (<code>ncbi.nlm.nih.gov/nuccore/</code>).</div>
+            </li>
+            <li class="feature-item">
+              <span class="feature-bullet"></span>
+              <div><strong>v3.0 — Scaling & Dataset Expansion:</strong> Updated pipeline to process 148+ entries and refactored scripts for <code>200 Bug Project(FB).csv</code>.</div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-icon icon-emerald">⚡</div>
+          <h3 class="card-title">Key Technical Code Upgrades</h3>
+          <div class="grid-2" style="margin-top: 0.5rem; gap: 0.85rem;">
+            <div class="stat-box">
+              <div class="stat-number" style="font-size: 1.5rem;">NBF Fallback</div>
+              <div class="stat-label">Organism Name Resolution</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number" style="font-size: 1.5rem;">GenBank API</div>
+              <div class="stat-label">Clickable NCBI Accession URLs</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number" style="font-size: 1.5rem;">Cache Engine</div>
+              <div class="stat-label">HTML Disk Cache & Throttle</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-number" style="font-size: 1.5rem;">SSL Bypass</div>
+              <div class="stat-label">macOS CA Cert Validation Fix</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3: CS / Data Analysis — Entity Resolution & Technical Architecture -->
+    <section class="slide" id="slide-3">
+      <div class="slide-category">Slide 3 / 5 • CS & Technical Architecture</div>
+      <h2 class="slide-title">Scraping Engine & Entity Resolution</h2>
+      <p class="slide-subtitle">
+        Algorithmic mapping of missing catalog identifiers, null value management, and building clean feature stores for ML models.
+      </p>
+
+      <div class="grid-3" style="margin-bottom: 1.5rem;">
+        <div class="card">
+          <div class="card-icon icon-violet">⚡</div>
+          <h3 class="card-title">Parallel Architecture</h3>
+          <p class="card-desc">
+            Multithreaded fetching with disk caching keeps latency under 0.5 seconds while preventing server rate limiting.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon icon-amber">🔍</div>
+          <h3 class="card-title">Taxonomic Entity Resolution</h3>
+          <p class="card-desc">
+            Automated resolution of <code>NBF</code> ("Not Being Found") species to primary ATCC reference catalog strains (e.g. <em>S. aureus</em> → <code>ATCC 25923</code>).
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon icon-cyan">🤖</div>
+          <h3 class="card-title">37-Column Schema Output</h3>
+          <p class="card-desc">
+            Generates a populated metadata catalog that acts as a structured feature store for biosensor machine learning models.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 1.25rem;">
+        <h4 style="font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.5rem;">🧠 Technical Impact</h4>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+          Taxonomic entity resolution reduced catalog ambiguity from 22% in raw input to 0% in the final analytical dataset, ensuring clean join keys for machine learning model training.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 4: Bio Domain — Isolation Sources & Ecological Context -->
+    <section class="slide" id="slide-4">
+      <div class="slide-category">Slide 4 / 5 • Microbiological Domain</div>
+      <h2 class="slide-title">Isolation Sources & Ecological Provenance</h2>
+      <p class="slide-subtitle">
+        Mapping isolation origins to establish sample diversity, target specificity, and real-world background matrix conditions for sensor testing.
+      </p>
+
+      <div class="grid-3" style="margin-bottom: 1.5rem;">
+        <div class="card">
+          <div class="card-icon icon-rose">🩸</div>
+          <h3 class="card-title">Clinical & Human Isolates</h3>
+          <p class="card-desc">
+            Isolated from blood, sputum, wound exudates, and tissue. Critical for benchmarking sensor sensitivity on human clinical pathogens (e.g., <em>S. aureus</em>).
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon icon-amber">🐾</div>
+          <h3 class="card-title">Veterinary Host Specimens</h3>
+          <p class="card-desc">
+            Derived from animal host lesions and veterinary infections. Expands sensor target recognition across zoonotic vectors (e.g., <em>Rhodococcus equi</em>).
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon icon-emerald">🌱</div>
+          <h3 class="card-title">Environmental & Sewage</h3>
+          <p class="card-desc">
+            Sampled from soil, wastewater, and sludge. Essential for testing sensor cross-reactivity against background flora (e.g., <em>C. glutamicum</em>).
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 1.25rem;">
+        <h4 style="font-size: 0.95rem; color: var(--text-main); margin-bottom: 0.5rem;">💡 Sensor Matrix Relevance</h4>
+        <p style="font-size: 0.88rem; color: var(--text-muted); line-height: 1.5;">
+          Categorizing isolation origins directly guides sample preparation (e.g. blood lysate filtering vs. environmental water concentration) and prevents false-positive signals during field testing.
+        </p>
+      </div>
+    </section>
+
+    <!-- SLIDE 5: Bio Domain — Growth Dynamics, Biosafety & Safety Data Sheets -->
+    <section class="slide" id="slide-5">
+      <div class="slide-category">Slide 5 / 5 • Safety & Culture Parameters</div>
+      <h2 class="slide-title">Growth Dynamics, Biosafety & Safety Data Sheets</h2>
+      <p class="slide-subtitle">
+        Standardized culture growth requirements, biosafety containment levels, and direct REST API Safety Data Sheet integration.
+      </p>
+
+      <div class="grid-2" style="margin-bottom: 1.25rem;">
+        <div class="card">
+          <div class="card-icon icon-amber">🌡️</div>
+          <h3 class="card-title">Growth Parameters & Culture Profiles</h3>
+          <ul class="feature-list" style="margin-top: 0.5rem;">
+            <li class="feature-item"><span class="feature-bullet"></span><div><strong>Incubation Temp:</strong> 37°C clinical pathogen standard vs. 30°C environmental.</div></li>
+            <li class="feature-item"><span class="feature-bullet"></span><div><strong>Culture Media:</strong> Trypticase Soy (#18/#260: 65%) and Brain Heart Infusion (#44: 20%).</div></li>
+            <li class="feature-item"><span class="feature-bullet"></span><div><strong>Gaseous Atmosphere:</strong> Aerobic (85%) vs. CO₂ / Microaerophilic (15%).</div></li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <div class="card-icon icon-cyan">⚠️</div>
+          <h3 class="card-title">Biosafety Rating & SDS API Links</h3>
+          <ul class="feature-list" style="margin-top: 0.5rem;">
+            <li class="feature-item"><span class="feature-bullet" style="background: var(--primary-emerald);"></span><div><strong>BSL-1 Rating:</strong> Low-risk control strains (e.g. <em>E. avium</em>, <em>C. glutamicum</em>) for open bench testing.</div></li>
+            <li class="feature-item"><span class="feature-bullet" style="background: var(--primary-amber);"></span><div><strong>BSL-2 Rating:</strong> Clinical pathogens (e.g. <em>S. aureus</em>, <em>R. equi</em>) requiring bio-containment hood protocols.</div></li>
+            <li class="feature-item"><span class="feature-bullet" style="background: var(--primary-cyan);"></span><div><strong>Direct SDS API:</strong> Dynamic REST links (<code>/api/product/sds?atcc_number=...</code>) for instant hazard access.</div></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Sample Dataset Table Excerpt -->
+      <div class="table-container">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>ATCC #</th>
+              <th>Organism Binomial</th>
+              <th>Isolation Source</th>
+              <th>Culture Medium</th>
+              <th>Temp</th>
+              <th>Atmosphere</th>
+              <th>BSL Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>ATCC 14025</td>
+              <td><em>Enterococcus avium</em></td>
+              <td>Quality Control Record</td>
+              <td>TSA w/ Sheep Blood (#260)</td>
+              <td>37°C</td>
+              <td>Aerobic</td>
+              <td><span class="badge badge-bsl1">BSL 1</span></td>
+            </tr>
+            <tr>
+              <td>ATCC 8750</td>
+              <td><em>Alcaligenes faecalis</em></td>
+              <td>Preceptrol Culture</td>
+              <td>Trypticase Soy (#18)</td>
+              <td>37°C</td>
+              <td>Aerobic</td>
+              <td><span class="badge badge-bsl1">BSL 1</span></td>
+            </tr>
+            <tr>
+              <td>ATCC 6939</td>
+              <td><em>Rhodococcus equi</em></td>
+              <td>Foal Lung Abscess</td>
+              <td>Brain Heart Infusion (#44)</td>
+              <td>37°C</td>
+              <td>Aerobic</td>
+              <td><span class="badge badge-bsl2">BSL 2</span></td>
+            </tr>
+            <tr>
+              <td>ATCC 13032</td>
+              <td><em>Corynebacterium glutamicum</em></td>
+              <td>Sewage / Wastewater</td>
+              <td>Nutrient Agar (#3)</td>
+              <td>37°C</td>
+              <td>Aerobic</td>
+              <td><span class="badge badge-bsl1">BSL 1</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Presenter Script Teleprompter Drawer -->
+  <div class="script-drawer" id="script-drawer">
+    <div class="script-header">
+      <div class="script-title">
+        <span>🎙️</span> Video Presentation Script • <span id="script-slide-num">Slide 1</span>
+      </div>
+      <button class="close-script" id="close-script-btn">✕</button>
+    </div>
+    <div class="script-body" id="script-text">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Control Bar -->
+  <footer class="bottom-bar">
+    <div class="shortcut-hint">
+      Use <kbd>←</kbd> <kbd>→</kbd> or <kbd>Space</kbd> to navigate | Press <kbd>S</kbd> for Script
+    </div>
+
+    <div class="progress-indicator" id="dots-container">
+      <div class="dot active" data-slide="0"></div>
+      <div class="dot" data-slide="1"></div>
+      <div class="dot" data-slide="2"></div>
+      <div class="dot" data-slide="3"></div>
+      <div class="dot" data-slide="4"></div>
+    </div>
+
+    <div class="slide-controls">
+      <button class="nav-btn" id="prev-btn" disabled>← Previous</button>
+      <span class="counter-text" id="slide-counter">1 / 5</span>
+      <button class="nav-btn" id="next-btn">Next →</button>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
