@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 ATCC Primary Name-Lookup Scraper with ATCC Number Verification & NBF Fallback
-1. Reads the input CSV file "100 Bug Project(FB).csv".
+1. Reads the input CSV file "200 Bug Project(FB).csv".
 2. Looks up organism names and ATCC numbers (resolving 'NBF' entries to reference strains).
 3. Fetches and parses biological metadata from ATCC.org.
-4. Generates a NEW populated CSV file ("100_Bug_Project_Populated.csv") WITHOUT modifying the input CSV file!
+4. Generates a NEW populated CSV file ("200_Bug_Project_Populated.csv") WITHOUT modifying the input CSV file!
 5. Provides official ATCC Product Sheet PDF links for each strain.
 """
 
@@ -18,8 +18,8 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from bs4 import BeautifulSoup
 
-INPUT_CSV = "100 Bug Project(FB).csv"
-OUTPUT_CSV = "100_Bug_Project_Populated.csv"
+INPUT_CSV = "200 Bug Project(FB).csv"
+OUTPUT_CSV = "200_Bug_Project_Populated.csv"
 BASE_URL = "https://www.atcc.org/products/"
 DEFAULT_CACHE_DIR = "cache"
 
@@ -235,8 +235,8 @@ def process_100_bug_project(input_file=INPUT_CSV, output_file=OUTPUT_CSV):
         if col not in headers:
             headers.append(col)
 
-    name_col = next((h for h in headers if "name" in h.lower() or "organism" in h.lower()), headers[0])
-    atcc_col = next((h for h in headers if "atcc" in h.lower() or "number" in h.lower() or "id" in h.lower()), None)
+    atcc_col = next((h for h in headers if "source" in h.lower() or "atcc" in h.lower() or "number" in h.lower() or "id" in h.lower()), headers[0])
+    name_col = next((h for h in headers if "strain" in h.lower() or "name" in h.lower() or "organism name" in h.lower()), headers[1] if len(headers) > 1 else headers[0])
 
     print(f"[INFO] Reading '{input_file}' ({len(rows)} entries)...")
 
